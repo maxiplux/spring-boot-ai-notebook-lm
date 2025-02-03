@@ -1,4 +1,4 @@
-package app.quantun.summay.model.request;
+package app.quantun.summary.model.request;
 
 public record Question(String question) {
 

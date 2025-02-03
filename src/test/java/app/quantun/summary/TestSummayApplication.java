@@ -1,4 +1,4 @@
-package app.quantun.summay;
+package app.quantun.summary;
 
 import org.springframework.boot.SpringApplication;
 

@@ -1,8 +1,7 @@
-package app.quantun.summay.services;
+package app.quantun.summary.services;
 
 
-import app.quantun.summay.model.request.Answer;
-import app.quantun.summay.model.request.Question;
+import app.quantun.summary.model.request.Answer;
 
 public interface PdfServices {
     String getResponse(String message);

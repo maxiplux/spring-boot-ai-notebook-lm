@@ -1,30 +1,21 @@
-package app.quantun.summay.controller;
+package app.quantun.summary.controller;
 
 
-import app.quantun.summay.model.request.Answer;
-import app.quantun.summay.model.request.Question;
-import app.quantun.summay.services.FileStorageService;
-import app.quantun.summay.services.PdfServices;
+import app.quantun.summary.model.request.Answer;
+import app.quantun.summary.services.FileStorageService;
+import app.quantun.summary.services.PdfServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor

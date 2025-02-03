@@ -1,4 +1,4 @@
-package app.quantun.summay.config;
+package app.quantun.summary.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.context.annotation.Bean;

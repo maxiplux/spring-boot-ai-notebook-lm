@@ -1,4 +1,4 @@
-package app.quantun.summay;
+package app.quantun.summary;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

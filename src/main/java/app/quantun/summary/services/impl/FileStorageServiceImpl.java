@@ -1,9 +1,9 @@
-package app.quantun.summay.services.impl;
+package app.quantun.summary.services.impl;
 
-import app.quantun.exception.CustomEmptyFileException;
-import app.quantun.exception.FileStorageException;
-import app.quantun.exception.InvalidFileTypeException;
-import app.quantun.summay.services.FileStorageService;
+import app.quantun.summary.exception.CustomEmptyFileException;
+import app.quantun.summary.exception.FileStorageException;
+import app.quantun.summary.exception.InvalidFileTypeException;
+import app.quantun.summary.services.FileStorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

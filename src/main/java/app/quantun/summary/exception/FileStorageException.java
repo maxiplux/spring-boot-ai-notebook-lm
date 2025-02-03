@@ -1,4 +1,4 @@
-package app.quantun.exception;
+package app.quantun.summary.exception;
 
 import java.io.IOException;
 
