@@ -1,9 +1,13 @@
-package app.quantun.summary.services;
+package app.quantun.summary.service;
 
 
+import app.quantun.summary.model.dto.TableIndexContent;
 import app.quantun.summary.model.request.Answer;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface PdfServices {
+    TableIndexContent getBookTableOfContentPages(String message);
+
     String getResponse(String message);
 
     Answer getSimpleAnswerFromRandomQuestionString(String message);
@@ -12,7 +16,7 @@ public interface PdfServices {
 
     Answer getCapitalWithInfo(String stateOrCountry);
 
-    //Answer getAnswerFromDatabaseMovies(Question question);
+    String storePdfFile(MultipartFile file);
 
-    //Answer getAdviceToBuyATruck(Question question);
+
 }

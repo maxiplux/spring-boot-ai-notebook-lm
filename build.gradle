@@ -32,6 +32,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-vertex-ai-gemini-spring-boot-starter
+    implementation 'org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter'
+
+
+
     implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
     implementation 'org.springframework.ai:spring-ai-pdf-document-reader'
     implementation 'org.springframework.ai:spring-ai-pgvector-store-spring-boot-starter'
@@ -39,9 +45,9 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    //developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     runtimeOnly 'org.postgresql:postgresql'
-    developmentOnly 'org.springframework.ai:spring-ai-spring-boot-docker-compose'
+    //developmentOnly 'org.springframework.ai:spring-ai-spring-boot-docker-compose'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
@@ -55,6 +61,25 @@ dependencies {
 
 
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
+
+    // JAXB Requirements
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.4'
+
+    // Spring XML Support
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+
+
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // (Optionally) also include H2 for tests explicitly:
+    testImplementation 'com.h2database:h2'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+
 }
 
 dependencyManagement {

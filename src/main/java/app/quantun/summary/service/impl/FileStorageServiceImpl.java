@@ -1,9 +1,9 @@
-package app.quantun.summary.services.impl;
+package app.quantun.summary.service.impl;
 
 import app.quantun.summary.exception.CustomEmptyFileException;
 import app.quantun.summary.exception.FileStorageException;
 import app.quantun.summary.exception.InvalidFileTypeException;
-import app.quantun.summary.services.FileStorageService;
+import app.quantun.summary.service.FileStorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     /**
      * Stores the PDF file to the specified directory.
+     *
      * @param file the PDF file to store
      * @return the file name
      * @throws FileStorageException if an error occurs during file storage
@@ -43,6 +44,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     /**
      * Validates the uploaded file.
+     *
      * @param file the file to validate
      */
     private void validateFile(MultipartFile file) {
@@ -60,6 +62,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     /**
      * Creates the upload directory if it does not exist.
+     *
      * @return the path to the upload directory
      * @throws IOException if an error occurs during directory creation
      */
@@ -74,7 +77,8 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     /**
      * Saves the file to the disk.
-     * @param file the file to save
+     *
+     * @param file       the file to save
      * @param uploadPath the path to the upload directory
      * @return the file name
      * @throws IOException if an error occurs during file saving

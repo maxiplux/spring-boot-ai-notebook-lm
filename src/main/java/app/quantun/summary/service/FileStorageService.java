@@ -1,4 +1,4 @@
-package app.quantun.summary.services;
+package app.quantun.summary.service;
 
 import app.quantun.summary.exception.FileStorageException;
 import org.springframework.web.multipart.MultipartFile;

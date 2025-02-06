@@ -1,9 +1,7 @@
 package app.quantun.summary.controller;
 
 
-import app.quantun.summary.model.request.Answer;
-import app.quantun.summary.services.FileStorageService;
-import app.quantun.summary.services.PdfServices;
+import app.quantun.summary.service.PdfServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,22 +24,20 @@ public class PdfController {
 
     private final PdfServices pdfServices;
 
-    private final FileStorageService fileStorageService;
 
-    @PostMapping("/question")
-    public Answer getResponse(String message) {
-        return this.pdfServices.getSimpleAnswerFromRandomQuestionString(message);
-    }
-
-
-    @PostMapping("/give-a-capital")
-    public Answer getCapitalOrState(String countryOrState) {
-        return this.pdfServices.getCapitalWithInfo(countryOrState);
-    }
-
+//    @PostMapping("/get-table-of-content")
+//    public TableIndexContent getTableOfContent(String message) {
+//        return this.pdfServices.getBookTableOfContentPages(message);
+//    }
+//
+//
+//    @PostMapping("/give-a-capital")
+//    public Answer getCapitalOrState(String countryOrState) {
+//        return this.pdfServices.getCapitalWithInfo(countryOrState);
+//    }
 
 
-    @PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
             summary = "Upload PDF file",
             description = "Upload a PDF file to the server",
@@ -64,7 +60,7 @@ public class PdfController {
             }
     )
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        String fileName= this.fileStorageService.storePdfFile(file);
+        String fileName = this.pdfServices.storePdfFile(file);
         return ResponseEntity.ok("File uploaded successfully: " + fileName);
     }
 }
