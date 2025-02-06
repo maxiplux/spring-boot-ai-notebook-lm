@@ -2,17 +2,13 @@ package app.quantun.summary.service.impl;
 
 import app.quantun.summary.message.producer.KafkaProducerService;
 import app.quantun.summary.model.dto.TableIndexContent;
-import app.quantun.summary.model.request.Answer;
 import app.quantun.summary.service.FileStorageService;
 import app.quantun.summary.service.PdfServices;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.converter.BeanOutputConverter;
@@ -76,67 +72,6 @@ public class PdfServicesImpl implements PdfServices {
         return result;
     }
 
-    /**
-     * Retrieves a response from the AI chat client.
-     *
-     * @param message the message to send to the AI chat client
-     * @return the response from the AI chat client
-     */
-    @Override
-    public String getResponse(String message) {
-        PromptTemplate promptTemplate = new PromptTemplate(message);
-        Prompt prompt = promptTemplate.create();
-        return openAiChatClient.prompt(prompt).call().content();
-    }
-
-    /**
-     * Retrieves a simple answer from a random question string.
-     *
-     * @param message the random question string
-     * @return the simple answer
-     */
-    @Override
-    public Answer getSimpleAnswerFromRandomQuestionString(String message) {
-        PromptTemplate promptTemplate = new PromptTemplate(message);
-        Prompt prompt = promptTemplate.create();
-        return new Answer(openAiChatClient.prompt(prompt).call().content());
-    }
-
-    /**
-     * Retrieves the capital of a given state or country.
-     *
-     * @param stateOrCountry the state or country
-     * @return the capital of the state or country
-     */
-    @Override
-    public Answer getCapital(String stateOrCountry) {
-        PromptTemplate promptTemplate = new PromptTemplate(resourceCapitalPromptTemplate);
-        Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry));
-        ChatResponse response = openAiChatClient.prompt(prompt).call().chatResponse();
-        String responseString;
-        JsonNode jsonNode = null;
-        try {
-            jsonNode = objectMapper.readTree(response.getResult().getOutput().getContent());
-        } catch (JsonProcessingException e) {
-            log.error("Error parsing response for {}: {}", stateOrCountry, e.getMessage(), e);
-        }
-        responseString = jsonNode.get("answer").asText();
-        return new Answer(responseString);
-    }
-
-    /**
-     * Retrieves the capital and additional information of a given state or country.
-     *
-     * @param stateOrCountry the state or country
-     * @return the capital and additional information of the state or country
-     */
-    @Override
-    public Answer getCapitalWithInfo(String stateOrCountry) {
-        PromptTemplate promptTemplate = new PromptTemplate(this.resourceCapitalWithInfoPromptTemplate);
-        Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry));
-        ChatResponse response = openAiChatClient.prompt(prompt).call().chatResponse();
-        return new Answer(response.getResult().getOutput().getContent());
-    }
 
     /**
      * Stores the uploaded PDF file and sends a message to Kafka.

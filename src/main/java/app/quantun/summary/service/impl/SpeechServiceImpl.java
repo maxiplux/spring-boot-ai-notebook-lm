@@ -107,7 +107,7 @@ public class SpeechServiceImpl {
     /**
      * Converts text to speech using the Azure TTS API.
      *
-     * @param ssml the SSML string
+     * @param ssml           the SSML string
      * @param outputFilePath the output file path
      * @return the status of the text-to-speech conversion
      */

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,7 +30,7 @@ public class TextToSpeechClientTest {
 
         when(webClient.post()).thenReturn(requestBodyUriSpec);
         when(requestBodyUriSpec.uri(any(String.class))).thenReturn(requestBodyUriSpec);
-        when(requestBodyUriSpec.body(any(WebClient.RequestBodySpec.class))).thenReturn(requestHeadersSpec);
+        when(requestBodyUriSpec.body((org.springframework.web.reactive.function.BodyInserter<?, ? super org.springframework.http.client.reactive.ClientHttpRequest>) any(WebClient.RequestBodySpec.class))).thenReturn(requestHeadersSpec);
         when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.bodyToMono(byte[].class)).thenReturn(Mono.just("test".getBytes()));
     }
