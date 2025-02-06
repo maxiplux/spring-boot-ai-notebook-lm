@@ -38,9 +38,24 @@ public class SpeechServiceImpl {
     @Value("${azure.tts.server-url}")
     private String apiEndpoint;
 
-
+    /**
+     * Generates speech from text using the TextToSpeechClient.
+     *
+     * @return the status of the speech generation
+     */
     public String generateSpeech() {
-        SsmlSpeak speak = SsmlSpeak.builder()
+        SsmlSpeak speak = createSsmlSpeak();
+        val data = this.ttsClient.synthesizeSpeech(Util.toSsml(speak));
+        return saveAudioFile(data);
+    }
+
+    /**
+     * Creates an SsmlSpeak object with predefined voices and text.
+     *
+     * @return the SsmlSpeak object
+     */
+    private SsmlSpeak createSsmlSpeak() {
+        return SsmlSpeak.builder()
                 .lang("en-US")
                 .version("1.0")
                 .xmlns("http://www.w3.org/2001/10/synthesis")
@@ -69,27 +84,33 @@ public class SpeechServiceImpl {
                                                 "Teaching English as a language naturally makes us a service-oriented industry. Creating satisfied customers is an important part of any service-oriented business.")
                                         .build()
                         )
-
                 )
                 .build();
+    }
 
-        val data = this.ttsClient.synthesizeSpeech(Util.toSsml(speak));
-        //"convertTextToSpeech(Util.toSsml(speak), ttsSavePath);"
-
-
+    /**
+     * Saves the audio file to the specified path.
+     *
+     * @param data the audio data
+     * @return the status of the file saving
+     */
+    private String saveAudioFile(byte[] data) {
         try {
             Files.write(Paths.get(ttsSavePath + "audio.mp3"), data);
             return "OK";
         } catch (IOException e) {
-
             log.error("Error saving audio file {}", e.getMessage());
-
         }
         return "Error";
-
     }
 
-
+    /**
+     * Converts text to speech using the Azure TTS API.
+     *
+     * @param ssml the SSML string
+     * @param outputFilePath the output file path
+     * @return the status of the text-to-speech conversion
+     */
     public String convertTextToSpeech(String ssml, String outputFilePath) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/ssml+xml"));
@@ -115,10 +136,7 @@ public class SpeechServiceImpl {
             }
         } catch (Exception e) {
             log.error("Error converting text to speech: {}", e.getMessage());
-
         }
         return "Error";
     }
-
 }
-

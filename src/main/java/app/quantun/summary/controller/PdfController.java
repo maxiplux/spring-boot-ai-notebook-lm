@@ -18,25 +18,16 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "File Upload", description = "Endpoints for PDF file uploads")
-
 public class PdfController {
-
 
     private final PdfServices pdfServices;
 
-
-//    @PostMapping("/get-table-of-content")
-//    public TableIndexContent getTableOfContent(String message) {
-//        return this.pdfServices.getBookTableOfContentPages(message);
-//    }
-//
-//
-//    @PostMapping("/give-a-capital")
-//    public Answer getCapitalOrState(String countryOrState) {
-//        return this.pdfServices.getCapitalWithInfo(countryOrState);
-//    }
-
-
+    /**
+     * Handles the upload of a PDF file.
+     *
+     * @param file the PDF file to upload
+     * @return a response entity with the status of the upload
+     */
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
             summary = "Upload PDF file",
