@@ -1,6 +1,5 @@
 package app.quantun.summary.service.impl;
 
-
 import app.quantun.summary.message.producer.KafkaProducerService;
 import app.quantun.summary.model.dto.TableIndexContent;
 import app.quantun.summary.model.request.Answer;
@@ -55,33 +54,34 @@ public class PdfServicesImpl implements PdfServices {
     @Value("classpath:templates/system/table.content.st")
     private Resource tableOfContentPromptTemplate;
 
+    /**
+     * Retrieves the table of content pages for a given book.
+     *
+     * @param message the message containing the book information
+     * @return the table of content pages
+     */
     @Override
     public TableIndexContent getBookTableOfContentPages(String message) {
         PromptTemplate promptTemplate = new PromptTemplate(this.tableOfContentPromptTemplate);
-
         BeanOutputConverter<TableIndexContent> converter = new BeanOutputConverter<>(TableIndexContent.class);
-
-
         Prompt prompt = promptTemplate.create(Map.of("format", converter.getFormat()));
-
         String filePath = "C:/tmp/summary-ai-pdf/Software_Architecture_Patterns-compressed.pdf";
-
-        //String content = documentReader.read(filePath).getContent();
         Resource resource = resourceLoader.getResource("file:" + filePath);
         String aiResponse = geminiChatClient.prompt(prompt).user(promptUserSpec ->
-
                 promptUserSpec.text("Extract the Content for this book")
                         .media(new Media(new MimeType("application", "pdf"), resource))
-
-
         ).call().content();
-
         TableIndexContent result = converter.convert(aiResponse);
         log.info("Table of content: {}", result);
         return result;
     }
 
-
+    /**
+     * Retrieves a response from the AI chat client.
+     *
+     * @param message the message to send to the AI chat client
+     * @return the response from the AI chat client
+     */
     @Override
     public String getResponse(String message) {
         PromptTemplate promptTemplate = new PromptTemplate(message);
@@ -89,55 +89,65 @@ public class PdfServicesImpl implements PdfServices {
         return openAiChatClient.prompt(prompt).call().content();
     }
 
+    /**
+     * Retrieves a simple answer from a random question string.
+     *
+     * @param message the random question string
+     * @return the simple answer
+     */
     @Override
     public Answer getSimpleAnswerFromRandomQuestionString(String message) {
         PromptTemplate promptTemplate = new PromptTemplate(message);
         Prompt prompt = promptTemplate.create();
         return new Answer(openAiChatClient.prompt(prompt).call().content());
-
     }
 
-
+    /**
+     * Retrieves the capital of a given state or country.
+     *
+     * @param stateOrCountry the state or country
+     * @return the capital of the state or country
+     */
     @Override
     public Answer getCapital(String stateOrCountry) {
         PromptTemplate promptTemplate = new PromptTemplate(resourceCapitalPromptTemplate);
         Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry));
         ChatResponse response = openAiChatClient.prompt(prompt).call().chatResponse();
-
         String responseString;
-
         JsonNode jsonNode = null;
         try {
             jsonNode = objectMapper.readTree(response.getResult().getOutput().getContent());
         } catch (JsonProcessingException e) {
             log.error("Error parsing response for {}: {}", stateOrCountry, e.getMessage(), e);
-
-
         }
-
         responseString = jsonNode.get("answer").asText();
-
         return new Answer(responseString);
     }
 
-
+    /**
+     * Retrieves the capital and additional information of a given state or country.
+     *
+     * @param stateOrCountry the state or country
+     * @return the capital and additional information of the state or country
+     */
     @Override
     public Answer getCapitalWithInfo(String stateOrCountry) {
         PromptTemplate promptTemplate = new PromptTemplate(this.resourceCapitalWithInfoPromptTemplate);
         Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry));
         ChatResponse response = openAiChatClient.prompt(prompt).call().chatResponse();
-
         return new Answer(response.getResult().getOutput().getContent());
     }
 
+    /**
+     * Stores the uploaded PDF file and sends a message to Kafka.
+     *
+     * @param file the uploaded PDF file
+     * @return the stored file name
+     */
     @Override
     public String storePdfFile(MultipartFile file) {
         val message = this.fileStorageService.storePdfFile(file);
-
         this.kafkaProducerService.sendHashMapMessage();
         return message;
-
     }
-
-
 }
