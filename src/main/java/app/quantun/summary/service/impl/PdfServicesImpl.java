@@ -23,6 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
+/**
+ * Service implementation for PDF-related operations.
+ * This class provides methods to extract table of content pages from a book and store PDF files.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -71,7 +75,6 @@ public class PdfServicesImpl implements PdfServices {
         log.info("Table of content: {}", result);
         return result;
     }
-
 
     /**
      * Stores the uploaded PDF file and sends a message to Kafka.
