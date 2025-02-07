@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+/**
+ * Kafka producer service implementation for sending messages to Kafka topics.
+ * This class is responsible for producing and sending messages to the "bulk-data" topic.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -16,7 +20,10 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
     private final KafkaTemplate<String, Map<String, String>> kafkaTemplate;
 
-
+    /**
+     * Sends a batch of HashMap messages to the "bulk-data" topic.
+     * Each message contains an ID, name, and value.
+     */
     @Override
     public void sendHashMapMessage() {
         IntStream.rangeClosed(1, 10).forEach(i -> {

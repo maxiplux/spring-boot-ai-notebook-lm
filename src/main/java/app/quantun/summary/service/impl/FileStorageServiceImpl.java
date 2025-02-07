@@ -15,6 +15,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+/**
+ * Service implementation for file storage operations.
+ * This class provides methods to store PDF files to a specified directory.
+ */
 @Service
 @Slf4j
 public class FileStorageServiceImpl implements FileStorageService {

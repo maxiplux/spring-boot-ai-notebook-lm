@@ -6,15 +6,30 @@ import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuration class for AI chat clients.
+ * This class provides beans for OpenAI and Gemini chat clients.
+ */
 @Configuration
 public class AiConfig {
 
-
+    /**
+     * Creates a ChatClient bean for OpenAI.
+     *
+     * @param chatModel the OpenAI chat model
+     * @return the ChatClient instance
+     */
     @Bean
     ChatClient openAiChatClient(OpenAiChatModel chatModel) {
         return ChatClient.create(chatModel);
     }
 
+    /**
+     * Creates a ChatClient bean for Gemini.
+     *
+     * @param chatModel the Gemini chat model
+     * @return the ChatClient instance
+     */
     @Bean
     ChatClient geminiChatClient(VertexAiGeminiChatModel chatModel) {
         return ChatClient.create(chatModel);

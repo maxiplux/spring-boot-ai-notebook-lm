@@ -21,6 +21,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
+/**
+ * Service implementation for speech-related operations.
+ * This class provides methods to generate speech from text and convert text to speech using Azure TTS API.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -95,6 +99,10 @@ public class SpeechServiceImpl {
      * @return the status of the file saving
      */
     private String saveAudioFile(byte[] data) {
+        if (data == null) {
+            log.error("Audio data is null");
+            return "Error";
+        }
         try {
             Files.write(Paths.get(ttsSavePath + "audio.mp3"), data);
             return "OK";

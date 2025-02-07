@@ -51,6 +51,9 @@ public class PdfController {
             }
     )
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        if (file == null) {
+            return ResponseEntity.badRequest().body("File cannot be null");
+        }
         String fileName = this.pdfServices.storePdfFile(file);
         return ResponseEntity.ok("File uploaded successfully: " + fileName);
     }

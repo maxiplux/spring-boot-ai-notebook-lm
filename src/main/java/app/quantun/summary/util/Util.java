@@ -8,12 +8,20 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.StringWriter;
 
+/**
+ * Utility class for SSML (Speech Synthesis Markup Language) operations.
+ * This class provides methods to convert SsmlSpeak objects to SSML strings.
+ */
 @Slf4j
 public class Util {
 
-
+    /**
+     * Converts an SsmlSpeak object to an SSML string.
+     *
+     * @param speak the SsmlSpeak object to convert
+     * @return the SSML string representation of the SsmlSpeak object
+     */
     public static String toSsml(SsmlSpeak speak) {
-
         try {
             log.info("Ssml Start ");
             JAXBContext context = JAXBContext.newInstance(SsmlSpeak.class);
@@ -25,7 +33,6 @@ public class Util {
             return writer.toString();
         } catch (JAXBException e) {
             log.error("Error while marshalling ssml {}", e.getMessage());
-
         }
         return "";
     }
