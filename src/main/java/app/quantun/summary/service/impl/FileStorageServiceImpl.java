@@ -23,75 +23,75 @@ import java.util.Objects;
 @Slf4j
 public class FileStorageServiceImpl implements FileStorageService {
 
-    @Value("${app.config.pdf.upload.path}")
-    private String uploadDir;
+  @Value("${app.config.pdf.upload.path}")
+  private String uploadDir;
 
-    /**
-     * Stores the PDF file to the specified directory.
-     *
-     * @param file the PDF file to store
-     * @return the file name
-     * @throws FileStorageException if an error occurs during file storage
-     */
-    @Override
-    public String storePdfFile(MultipartFile file) throws FileStorageException {
-        try {
-            log.info("Storing file: {}", file.getOriginalFilename());
-            validateFile(file);
-            Path uploadPath = createUploadDirectory();
-            return saveFileToDisk(file, uploadPath);
-        } catch (IOException e) {
-            log.error("Failed to store file: {}", e.getMessage());
-            throw new FileStorageException("Failed to store file: " + e.getMessage(), e);
-        }
+  /**
+   * Stores the PDF file to the specified directory.
+   *
+   * @param file the PDF file to store
+   * @return the file name
+   * @throws FileStorageException if an error occurs during file storage
+   */
+  @Override
+  public String storePdfFile(MultipartFile file) throws FileStorageException {
+    try {
+      log.info("Storing file: {}", file.getOriginalFilename());
+      validateFile(file);
+      Path uploadPath = createUploadDirectory();
+      return saveFileToDisk(file, uploadPath);
+    } catch (IOException e) {
+      log.error("Failed to store file: {}", e.getMessage());
+      throw new FileStorageException("Failed to store file: " + e.getMessage(), e);
+    }
+  }
+
+  /**
+   * Validates the uploaded file.
+   *
+   * @param file the file to validate
+   */
+  private void validateFile(MultipartFile file) {
+    if (file.isEmpty()) {
+      log.warn("Uploaded file is empty");
+      throw new CustomEmptyFileException("File cannot be empty");
     }
 
-    /**
-     * Validates the uploaded file.
-     *
-     * @param file the file to validate
-     */
-    private void validateFile(MultipartFile file) {
-        if (file.isEmpty()) {
-            log.warn("Uploaded file is empty");
-            throw new CustomEmptyFileException("File cannot be empty");
-        }
-
-        String fileName = Objects.requireNonNull(file.getOriginalFilename());
-        if (!fileName.toLowerCase().endsWith(".pdf")) {
-            log.warn("Invalid file type: {}", fileName);
-            throw new InvalidFileTypeException("Only PDF files are allowed");
-        }
+    String fileName = Objects.requireNonNull(file.getOriginalFilename());
+    if (!fileName.toLowerCase().endsWith(".pdf")) {
+      log.warn("Invalid file type: {}", fileName);
+      throw new InvalidFileTypeException("Only PDF files are allowed");
     }
+  }
 
-    /**
-     * Creates the upload directory if it does not exist.
-     *
-     * @return the path to the upload directory
-     * @throws IOException if an error occurs during directory creation
-     */
-    private Path createUploadDirectory() throws IOException {
-        Path uploadPath = Paths.get(this.uploadDir);
-        if (!Files.exists(uploadPath)) {
-            log.info("Creating upload directory at: {}", uploadPath);
-            return Files.createDirectories(uploadPath);
-        }
-        return uploadPath;
+  /**
+   * Creates the upload directory if it does not exist.
+   *
+   * @return the path to the upload directory
+   * @throws IOException if an error occurs during directory creation
+   */
+  private Path createUploadDirectory() throws IOException {
+    Path uploadPath = Paths.get(this.uploadDir);
+    if (!Files.exists(uploadPath)) {
+      log.info("Creating upload directory at: {}", uploadPath);
+      return Files.createDirectories(uploadPath);
     }
+    return uploadPath;
+  }
 
-    /**
-     * Saves the file to the disk.
-     *
-     * @param file       the file to save
-     * @param uploadPath the path to the upload directory
-     * @return the file name
-     * @throws IOException if an error occurs during file saving
-     */
-    private String saveFileToDisk(MultipartFile file, Path uploadPath) throws IOException {
-        String fileName = Objects.requireNonNull(file.getOriginalFilename());
-        Path filePath = uploadPath.resolve(fileName);
-        log.info("Saving file to disk at: {}", filePath);
-        file.transferTo(filePath);
-        return fileName;
-    }
+  /**
+   * Saves the file to the disk.
+   *
+   * @param file       the file to save
+   * @param uploadPath the path to the upload directory
+   * @return the file name
+   * @throws IOException if an error occurs during file saving
+   */
+  private String saveFileToDisk(MultipartFile file, Path uploadPath) throws IOException {
+    String fileName = Objects.requireNonNull(file.getOriginalFilename());
+    Path filePath = uploadPath.resolve(fileName);
+    log.info("Saving file to disk at: {}", filePath);
+    file.transferTo(filePath);
+    return fileName;
+  }
 }
