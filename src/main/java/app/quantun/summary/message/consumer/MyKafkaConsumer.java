@@ -15,14 +15,15 @@ import java.util.Map;
 @Slf4j
 public class MyKafkaConsumer {
 
-    /**
-     * Listens to messages from the "bulk-data" topic and logs the received messages.
-     *
-     * @param messages the list of messages received from the topic
-     */
-    @KafkaListener(topics = "bulk-data", groupId = "my-group")
-    public void listen(List<Map<String, String>> messages) {
-        log.info("Received batch of " + messages.size() + " messages:");
-        messages.forEach(message -> log.info("  " + message));
-    }
+  /**
+   * Listens to messages from the "bulk-data" topic and logs the received messages.
+   *
+   * @param messages the list of messages received from the topic
+   */
+  @Override
+  @KafkaListener(topics = "bulk-data", groupId = "my-group")
+  public void listen(List<Map<String, String>> messages) {
+    log.info("Received batch of " + messages.size() + " messages:");
+    messages.forEach(message -> log.info("  " + message));
+  }
 }
