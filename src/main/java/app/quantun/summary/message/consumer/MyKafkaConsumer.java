@@ -7,6 +7,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface MyKafkaConsumer {
-    @KafkaListener(topics = "bulk-data", groupId = "my-group")
-    void listen(List<MessagePayload> messages);
+    void processMessages(List<MessagePayload> messages);
 }

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 
 @SpringJUnitConfig
 @EmbeddedKafka(partitions = 1, topics = {"bulk-data"})
-public class MyKafkaConsumerTest {
+class MyKafkaConsumerTest {
 
     private MyKafkaConsumer myKafkaConsumer;
     private KafkaTemplate<String, Map<String, String>> kafkaTemplate;
@@ -33,12 +33,12 @@ public class MyKafkaConsumerTest {
     }
 
     @Test
-    public void testListen() {
+    void testListen() {
         Map<String, String> message = new HashMap<>();
         message.put("key", "value");
 
         kafkaTemplate.send("bulk-data", message);
 
-        verify(myKafkaConsumer, timeout(5000).times(1)).listen(anyList());
+        verify(myKafkaConsumer, timeout(5000).times(1)).processMessages(any());
     }
 }
