@@ -92,6 +92,6 @@ public class FileStorageServiceImpl implements FileStorageService {
     Path filePath = uploadPath.resolve(fileName);
     log.info("Saving file to disk at: {}", filePath);
     file.transferTo(filePath);
-    return fileName;
+    return filePath.toString();
   }
 }

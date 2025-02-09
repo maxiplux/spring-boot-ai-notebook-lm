@@ -2,6 +2,9 @@ package app.quantun.summary.service.impl;
 
 import app.quantun.summary.message.producer.KafkaProducerService;
 import app.quantun.summary.model.contract.dto.TableIndexContent;
+import app.quantun.summary.model.contract.message.BookFilePayload;
+import app.quantun.summary.model.entity.SummaryBook;
+import app.quantun.summary.repository.SummaryBookRepository;
 import app.quantun.summary.service.FileStorageService;
 import app.quantun.summary.service.PdfServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +25,7 @@ import org.springframework.util.MimeType;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Service implementation for PDF-related operations.
@@ -39,18 +43,11 @@ public class PdfServicesImpl implements PdfServices {
   private final ChatClient openAiChatClient;
   @Qualifier("geminiChatClient")
   private final ChatClient geminiChatClient;
-  private final ObjectMapper objectMapper;
+
   private final ResourceLoader resourceLoader;
-  @Value("classpath:/templates/rag-prompt-template.st")
-  private Resource ressourceRagPromptTemplate;
-  @Value("classpath:/templates/system-message.st")
-  private Resource resourceSystemMessageTemplate;
-  @Value("classpath:/templates/rag-prompt-without-metadata-template.st")
-  private Resource resourceRagPromptWithoutMedataTemplate;
-  @Value("classpath:templates/get-capital-prompt.st")
-  private Resource resourceCapitalPromptTemplate;
-  @Value("classpath:templates/get-capital-with-info.st")
-  private Resource resourceCapitalWithInfoPromptTemplate;
+
+  private final SummaryBookRepository summaryBookRepository;
+
   @Value("classpath:templates/system/table.content.st")
   private Resource tableOfContentPromptTemplate;
 
@@ -84,8 +81,16 @@ public class PdfServicesImpl implements PdfServices {
    */
   @Override
   public String storePdfFile(MultipartFile file) {
-    val message = this.fileStorageService.storePdfFile(file);
-    this.kafkaProducerService.sendHashMapMessage();
-    return message;
+    val bookPath = this.fileStorageService.storePdfFile(file);
+    val summaryBook = SummaryBook.builder()
+        .uuid(UUID.randomUUID().toString())
+        .name(file.getOriginalFilename())
+        .path(bookPath)
+        .build();
+    val savedSummaryBook = this.summaryBookRepository.save(summaryBook);
+
+    val message=new BookFilePayload( savedSummaryBook.getId(),savedSummaryBook.getName());
+    this.kafkaProducerService.sendBookToBeProcessed(message);
+    return message.toString();
   }
 }
