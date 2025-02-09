@@ -1,7 +1,7 @@
 package app.quantun.summary.service.impl;
 
-import app.quantun.summary.model.dto.SsmlSpeak;
-import app.quantun.summary.model.dto.SsmlVoice;
+import app.quantun.summary.model.contract.dto.SsmlSpeak;
+import app.quantun.summary.model.contract.dto.SsmlVoice;
 import app.quantun.summary.service.rest.TextToSpeechClient;
 import app.quantun.summary.util.Util;
 import lombok.RequiredArgsConstructor;

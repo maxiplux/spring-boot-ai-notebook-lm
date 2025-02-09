@@ -1,7 +1,7 @@
 package app.quantun.summary.service.impl;
 
 import app.quantun.summary.message.producer.KafkaProducerService;
-import app.quantun.summary.model.dto.TableIndexContent;
+import app.quantun.summary.model.contract.dto.TableIndexContent;
 import app.quantun.summary.service.FileStorageService;
 import app.quantun.summary.service.PdfServices;
 import com.fasterxml.jackson.databind.ObjectMapper;

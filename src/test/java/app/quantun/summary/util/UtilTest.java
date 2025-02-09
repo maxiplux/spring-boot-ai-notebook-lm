@@ -1,7 +1,7 @@
 package app.quantun.summary.util;
 
-import app.quantun.summary.model.dto.SsmlSpeak;
-import app.quantun.summary.model.dto.SsmlVoice;
+import app.quantun.summary.model.contract.dto.SsmlSpeak;
+import app.quantun.summary.model.contract.dto.SsmlVoice;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

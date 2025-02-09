@@ -1,4 +1,4 @@
-package app.quantun.summary.model.dto;
+package app.quantun.summary.model.contract.dto;
 
 import jakarta.xml.bind.annotation.*;
 import lombok.AllArgsConstructor;

@@ -35,7 +35,11 @@ class PdfControllerTest {
 
         ResponseEntity<String> response = pdfController.handleFileUpload(file);
 
-        assertEquals(200, response.getStatusCodeValue());
+        extracted(response);
         assertEquals("File uploaded successfully: " + expectedFileName, response.getBody());
+    }
+
+    private static void extracted(ResponseEntity<String> response) {
+        assertEquals(200, response.getStatusCodeValue());
     }
 }

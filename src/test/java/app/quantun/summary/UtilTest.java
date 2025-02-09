@@ -1,7 +1,7 @@
 package app.quantun.summary;
 
-import app.quantun.summary.model.dto.SsmlSpeak;
-import app.quantun.summary.model.dto.SsmlVoice;
+import app.quantun.summary.model.contract.dto.SsmlSpeak;
+import app.quantun.summary.model.contract.dto.SsmlVoice;
 import app.quantun.summary.util.Util;
 import jakarta.xml.bind.JAXBException;
 import org.junit.jupiter.api.Test;

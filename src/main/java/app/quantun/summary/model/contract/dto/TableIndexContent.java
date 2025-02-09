@@ -1,4 +1,4 @@
-package app.quantun.summary.model.dto;
+package app.quantun.summary.model.contract.dto;
 
 
 import java.util.List;

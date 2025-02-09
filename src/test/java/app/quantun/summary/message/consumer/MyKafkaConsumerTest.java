@@ -25,7 +25,7 @@ public class MyKafkaConsumerTest {
 
     @BeforeEach
     public void setUp(EmbeddedKafkaBroker embeddedKafkaBroker) {
-        myKafkaConsumer = Mockito.spy(new MyKafkaConsumer());
+        myKafkaConsumer = Mockito.spy(new MyKafkaConsumerImpl());
 
         Map<String, Object> producerProps = KafkaTestUtils.producerProps(embeddedKafkaBroker);
         ProducerFactory<String, Map<String, String>> producerFactory = new DefaultKafkaProducerFactory<>(producerProps);

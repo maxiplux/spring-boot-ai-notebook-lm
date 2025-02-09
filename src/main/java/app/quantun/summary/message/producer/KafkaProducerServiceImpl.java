@@ -1,12 +1,11 @@
 package app.quantun.summary.message.producer;
 
+import app.quantun.summary.model.contract.MessagePayload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
@@ -18,7 +17,7 @@ import java.util.stream.IntStream;
 @Slf4j
 public class KafkaProducerServiceImpl implements KafkaProducerService {
 
-  private final KafkaTemplate<String, Map<String, String>> kafkaTemplate;
+  private final KafkaTemplate<Object, MessagePayload> kafkaTemplate;
 
   /**
    * Sends a batch of HashMap messages to the "bulk-data" topic.
@@ -29,11 +28,9 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     IntStream.rangeClosed(1, 10)
         .forEach(
             i -> {
-              Map<String, String> payload = new HashMap<>();
-              payload.put("id", String.valueOf(i));
-              payload.put("name", "User" + i);
-              payload.put("value", "Some data for user " + i);
-              kafkaTemplate.send("bulk-data", payload);
+                MessagePayload messagePayload = new MessagePayload( String.valueOf(i), "User" + i, "Some data for user " + i);
+
+              kafkaTemplate.send("bulk-data", messagePayload);
               log.info("Message {} sent successfully", i);
             });
     log.info("Message sent successfully");

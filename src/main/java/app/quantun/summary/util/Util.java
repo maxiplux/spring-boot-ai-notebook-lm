@@ -1,6 +1,6 @@
 package app.quantun.summary.util;
 
-import app.quantun.summary.model.dto.SsmlSpeak;
+import app.quantun.summary.model.contract.dto.SsmlSpeak;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
