@@ -5,6 +5,7 @@ import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 /**
  * Configuration class for AI chat clients.
@@ -19,6 +20,7 @@ public class AiConfig {
    * @param chatModel the OpenAI chat model
    * @return the ChatClient instance
    */
+  @Primary
   @Bean
   ChatClient openAiChatClient(OpenAiChatModel chatModel) {
     return ChatClient.create(chatModel);
