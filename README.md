@@ -1,4 +1,4 @@
-
+//spring.config.import=optional:file:D:/IdeaProjects/summay-data-spring-ai/.env[.properties]
 /////////test
 {
     "configurations": [
