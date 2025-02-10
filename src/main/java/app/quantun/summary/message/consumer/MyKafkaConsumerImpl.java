@@ -24,13 +24,7 @@ public class MyKafkaConsumerImpl implements MyKafkaConsumer {
 
   private final SummaryBookRepository summaryBookRepository;
 
-  /**
-   * Process incoming messages from the "bulk-data" topic.
-   *
-   * @param messages        List of messages to process.
-   * @param ack             Acknowledgment object for manual offset management.
-   * @param record          The ConsumerRecord for logging metadata.
-   */
+
   @KafkaListener(
           topics = "bulk-data",
           groupId = "my-group",
