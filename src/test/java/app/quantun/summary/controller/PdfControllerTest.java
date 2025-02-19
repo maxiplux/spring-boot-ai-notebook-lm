@@ -1,6 +1,7 @@
 package app.quantun.summary.controller;
 
 import app.quantun.summary.service.PdfServices;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,9 +23,20 @@ class PdfControllerTest {
     @InjectMocks
     private PdfController pdfController;
 
+    private AutoCloseable closeable;
+
+    private static void extracted(ResponseEntity<String> response) {
+        assertEquals(200, response.getStatusCodeValue());
+    }
+
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        closeable = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        closeable.close();
     }
 
     @Test
@@ -37,9 +49,5 @@ class PdfControllerTest {
 
         extracted(response);
         assertEquals("File uploaded successfully: " + expectedFileName, response.getBody());
-    }
-
-    private static void extracted(ResponseEntity<String> response) {
-        assertEquals(200, response.getStatusCodeValue());
     }
 }

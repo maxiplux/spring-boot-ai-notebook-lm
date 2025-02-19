@@ -4,6 +4,6 @@ import app.quantun.summary.model.contract.message.BookFilePayload;
 
 import java.util.List;
 
-public interface MyKafkaConsumer {
+public interface SummaryBookConsumer {
     void processMessages(List<BookFilePayload> messages);
 }

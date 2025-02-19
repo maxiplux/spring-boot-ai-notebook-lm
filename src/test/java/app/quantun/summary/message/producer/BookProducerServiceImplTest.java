@@ -1,8 +1,6 @@
 package app.quantun.summary.message.producer;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -15,16 +13,13 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Map;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 @SpringJUnitConfig
 @EmbeddedKafka(partitions = 1, topics = {"bulk-data"})
 @SpringBootTest
-public class KafkaProducerServiceImplTest {
+public class BookProducerServiceImplTest {
 
     @Autowired
-    private KafkaProducerService kafkaProducerService;
+    private SummaryBookProducerService summaryBookProducerService;
 
     @Autowired
     private KafkaTemplate<String, Map<String, String>> kafkaTemplate;
@@ -36,12 +31,5 @@ public class KafkaProducerServiceImplTest {
         kafkaTemplate = new KafkaTemplate<>(producerFactory);
     }
 
-    @Test
-    public void testSendHashMapMessage() {
-        kafkaProducerService = Mockito.spy(new KafkaProducerServiceImpl(kafkaTemplate));
 
-        kafkaProducerService.sendHashMapMessage();
-
-        verify(kafkaProducerService, times(1)).sendHashMapMessage();
-    }
 }

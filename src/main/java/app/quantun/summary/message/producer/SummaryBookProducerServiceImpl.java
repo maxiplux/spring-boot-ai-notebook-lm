@@ -9,7 +9,6 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.IntStream;
 
 /**
  * Kafka producer service implementation for sending messages to Kafka topics.
@@ -18,15 +17,13 @@ import java.util.stream.IntStream;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class KafkaProducerServiceImpl implements KafkaProducerService {
+public class SummaryBookProducerServiceImpl implements SummaryBookProducerService {
 
-  private final KafkaTemplate<Object, BookFilePayload> kafkaTemplate;
+    private final KafkaTemplate<Object, BookFilePayload> kafkaTemplate;
 
     // Externalize the topic name for better configurability
     @Value("${kafka.topic.bulk-data}")
     private String bulkDataTopic;
-
-
 
 
     @Override

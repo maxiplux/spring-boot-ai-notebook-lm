@@ -7,6 +7,6 @@ import org.springframework.web.service.annotation.PostExchange;
 @HttpExchange(url = "/cognitiveservices/v1")
 public interface TextToSpeechClient {
 
-  @PostExchange
-  byte[] synthesizeSpeech(@RequestBody String ssml);
+    @PostExchange
+    byte[] synthesizeSpeech(@RequestBody String ssml);
 }

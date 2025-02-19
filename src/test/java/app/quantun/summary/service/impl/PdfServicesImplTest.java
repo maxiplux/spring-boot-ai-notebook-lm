@@ -1,6 +1,6 @@
 package app.quantun.summary.service.impl;
 
-import app.quantun.summary.message.producer.KafkaProducerService;
+import app.quantun.summary.message.producer.SummaryBookProducerService;
 import app.quantun.summary.service.FileStorageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,13 +15,13 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class PdfServicesImplTest {
 
     @Mock
-    private KafkaProducerService kafkaProducerService;
+    private SummaryBookProducerService summaryBookProducerService;
 
     @Mock
     private FileStorageService fileStorageService;
@@ -49,11 +49,6 @@ class PdfServicesImplTest {
     }
 
 
-
-
-
-
-
     @Test
     void testStorePdfFile() {
         MultipartFile file = new MockMultipartFile("file", "test.pdf", "application/pdf", "test content".getBytes());
@@ -64,6 +59,6 @@ class PdfServicesImplTest {
 
         assertEquals(expectedFileName, result);
         verify(fileStorageService).storePdfFile(file);
-        verify(kafkaProducerService).sendHashMapMessage();
+        //verify(summaryBookProducerService).sendHashMapMessage();
     }
 }

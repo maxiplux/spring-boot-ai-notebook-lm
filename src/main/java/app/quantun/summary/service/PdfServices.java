@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface PdfServices {
 
-  TableIndexContent getBookTableOfContentPages(String message);
+    TableIndexContent getBookTableOfContentPages(String message);
 
-  String storePdfFile(MultipartFile file);
+    String storePdfFile(MultipartFile file);
 }
