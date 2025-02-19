@@ -1,11 +1,10 @@
 package app.quantun.summary.message.consumer;
 
-import app.quantun.summary.message.producer.SummaryBookProducerService;
 import app.quantun.summary.model.contract.message.BookFilePayload;
 import app.quantun.summary.model.entity.Book;
 import app.quantun.summary.repository.BookRepository;
-
-import app.quantun.summary.service.impl.SummaryServicesImpl;
+import app.quantun.summary.service.PodcastService;
+import app.quantun.summary.service.SummaryServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -28,7 +27,9 @@ public class SummaryBookConsumerImpl implements SummaryBookConsumer {
 
     private final BookRepository summaryBookRepository;
 
-    private final SummaryServicesImpl summaryServices;
+    private final SummaryServices summaryServices;
+
+    private final PodcastService podCastService;
 
 
     @KafkaListener(
@@ -73,7 +74,6 @@ public class SummaryBookConsumerImpl implements SummaryBookConsumer {
                         log.info("Book with id {} already exists in the database", message.id());
 
                         this.makeSummary(book);
-                        this.makeScript(book);
                         this.makePodcast(book);
                         this.saveChanges(book);
 
@@ -96,23 +96,21 @@ public class SummaryBookConsumerImpl implements SummaryBookConsumer {
             log.info("Saving changes for book with id: {}", book.getId());
             this.summaryBookRepository.save(book);
             log.info("Successfully saved changes for book with id: {}", book.getId());
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error("Failed to save changes for book with id: {}. Error: {}", book.getId(), e.getMessage());
 
         }
     }
 
+
     private void makePodcast(Book book) {
-
-    }
-
-    private void makeScript(Book book) {
+        val podCast = this.podCastService.createScript(book);
+        book.setPodCast(podCast);
 
     }
 
     private void makeSummary(Book book) {
-        val summary=summaryServices.summarizeBook(book);
+        val summary = summaryServices.summarizeBook(book);
         book.setTextSummary(summary);
 
     }

@@ -5,7 +5,6 @@ import app.quantun.summary.model.contract.dto.TableIndexContent;
 import app.quantun.summary.model.contract.message.BookFilePayload;
 import app.quantun.summary.model.entity.Book;
 import app.quantun.summary.repository.BookRepository;
-
 import app.quantun.summary.service.FileStorageService;
 import app.quantun.summary.service.PdfServices;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +39,6 @@ public class PdfServicesImpl implements PdfServices {
     public static final int TOP_FIVE_RECORDS_IN_VECTOR_DB = 5;
     private final SummaryBookProducerService summaryBookProducerService;
     private final FileStorageService fileStorageService;
-
 
 
     @Qualifier("geminiChatClient")

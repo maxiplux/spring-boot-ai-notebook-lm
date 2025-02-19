@@ -4,13 +4,9 @@ package app.quantun.summary.config.ai;
 import org.springframework.ai.anthropic.AnthropicChatModel;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.ai.openai.OpenAiChatOptions;
-import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 /**
  * Configuration class for AI chat clients.
@@ -28,7 +24,9 @@ public class AiConfig {
      */
     //@Primary
     @Bean
-    ChatClient openAiChatClient(OpenAiChatModel chatModel) {        return ChatClient.create(chatModel);    }
+    ChatClient openAiChatClient(OpenAiChatModel chatModel) {
+        return ChatClient.create(chatModel);
+    }
 
 
     @Bean
@@ -41,7 +39,6 @@ public class AiConfig {
     ChatClient anthropicChatClient(AnthropicChatModel chatModel) {
         return ChatClient.create(chatModel);
     }
-
 
 
 }

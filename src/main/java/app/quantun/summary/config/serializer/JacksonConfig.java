@@ -2,12 +2,11 @@ package app.quantun.summary.config.serializer;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.protobuf.Message;
+import com.google.protobuf.UnknownFieldSet;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.google.protobuf.UnknownFieldSet;
 
 @Configuration
 public class JacksonConfig {

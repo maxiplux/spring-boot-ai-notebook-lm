@@ -1,6 +1,7 @@
 package app.quantun.summary.model.entity;
 
 import app.quantun.summary.model.contract.dto.BookSummary;
+import app.quantun.summary.model.contract.dto.PodCast;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -29,7 +30,8 @@ public class Book {
     @Column(columnDefinition = "jsonb")
     private BookSummary textSummary;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Type(io.hypersistence.utils.hibernate.type.json.JsonType.class)
+    @Column(columnDefinition = "jsonb")
     private PodCast podCast;
 
 

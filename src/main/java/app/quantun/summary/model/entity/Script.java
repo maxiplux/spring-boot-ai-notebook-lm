@@ -2,22 +2,20 @@ package app.quantun.summary.model.entity;
 
 import app.quantun.summary.model.enums.InterviewGender;
 import app.quantun.summary.model.enums.InterviewLanguage;
+import app.quantun.summary.model.enums.InterviewName;
 import app.quantun.summary.model.enums.InterviewRole;
-import jakarta.persistence.*;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(of = "id")
-@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Script implements Comparable<Script> {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false)
-    private Long id;
 
     private Integer position;
 
@@ -27,9 +25,9 @@ public class Script implements Comparable<Script> {
 
     private InterviewLanguage language;
 
-    private String name;
+    private InterviewName name;
 
-    @Column(columnDefinition = "TEXT")
+
     private String text;
 
 

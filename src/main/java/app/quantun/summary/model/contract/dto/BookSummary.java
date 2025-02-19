@@ -1,9 +1,13 @@
 package app.quantun.summary.model.contract.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -12,11 +16,15 @@ import java.util.ArrayList;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BookSummary {
     private Metadata metadata = new Metadata();
-     private IntroductionBlueprint introduction = new IntroductionBlueprint();
-    @Builder.Default private CoreElementsBreakdown coreElements = new CoreElementsBreakdown();
-    @Builder.Default private List<Chapter> chapterDigest = new ArrayList<>();
-    @Builder.Default private CriticalAnalysisFramework analysis = new CriticalAnalysisFramework();
-    @Builder.Default private ActionableTakeawaySystem takeaways = new ActionableTakeawaySystem();
+    private IntroductionBlueprint introduction = new IntroductionBlueprint();
+    @Builder.Default
+    private CoreElementsBreakdown coreElements = new CoreElementsBreakdown();
+    @Builder.Default
+    private List<Chapter> chapterDigest = new ArrayList<>();
+    @Builder.Default
+    private CriticalAnalysisFramework analysis = new CriticalAnalysisFramework();
+    @Builder.Default
+    private ActionableTakeawaySystem takeaways = new ActionableTakeawaySystem();
 
     @Data
     @Builder
@@ -49,10 +57,14 @@ public class BookSummary {
     @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CoreElementsBreakdown {
-        @Builder.Default private PlotArchitecture plot = new PlotArchitecture();
-        @Builder.Default private List<CharacterEntry> characters = new ArrayList<>();
-        @Builder.Default private ThemeNetwork themes = new ThemeNetwork();
-        @Builder.Default private StyleAnalysis style = new StyleAnalysis();
+        @Builder.Default
+        private PlotArchitecture plot = new PlotArchitecture();
+        @Builder.Default
+        private List<CharacterEntry> characters = new ArrayList<>();
+        @Builder.Default
+        private ThemeNetwork themes = new ThemeNetwork();
+        @Builder.Default
+        private StyleAnalysis style = new StyleAnalysis();
 
         @Data
         @Builder
@@ -60,7 +72,8 @@ public class BookSummary {
         @AllArgsConstructor
         public static class PlotArchitecture {
             private String centralConflict;
-            @Builder.Default private List<String> narrativeArc = new ArrayList<>();
+            @Builder.Default
+            private List<String> narrativeArc = new ArrayList<>();
         }
 
         @Data
@@ -82,8 +95,10 @@ public class BookSummary {
         @JsonIgnoreProperties(ignoreUnknown = true)
         public static class ThemeNetwork {
             private String primaryTheme;
-            @Builder.Default private List<String> supportingThemes = new ArrayList<>();
-            @Builder.Default private List<String> recurringMotifs = new ArrayList<>();
+            @Builder.Default
+            private List<String> supportingThemes = new ArrayList<>();
+            @Builder.Default
+            private List<String> recurringMotifs = new ArrayList<>();
         }
 
         @Data
@@ -129,9 +144,12 @@ public class BookSummary {
     @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ActionableTakeawaySystem {
-        @Builder.Default private List<String> practicalApplications = new ArrayList<>();
-        @Builder.Default private List<String> discussionPrompts = new ArrayList<>();
-        @Builder.Default private List<String> furtherExploration = new ArrayList<>();
+        @Builder.Default
+        private List<String> practicalApplications = new ArrayList<>();
+        @Builder.Default
+        private List<String> discussionPrompts = new ArrayList<>();
+        @Builder.Default
+        private List<String> furtherExploration = new ArrayList<>();
     }
 }
 

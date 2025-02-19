@@ -1,7 +1,6 @@
 package app.quantun.summary.controller;
 
 import app.quantun.summary.model.contract.dto.TableIndexContent;
-import app.quantun.summary.model.contract.request.Answer;
 import app.quantun.summary.service.PdfServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -55,13 +54,10 @@ public class PdfController {
         return ResponseEntity.ok("File uploaded successfully: " + fileName);
     }
 
-        @PostMapping("/get-table-of-content")
+    @PostMapping("/get-table-of-content")
     public TableIndexContent getTableOfContent(String message) {
         return this.pdfServices.getBookTableOfContentPages(message);
     }
-
-
-
 
 
 }

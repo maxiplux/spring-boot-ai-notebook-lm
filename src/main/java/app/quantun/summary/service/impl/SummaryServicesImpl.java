@@ -1,7 +1,6 @@
 package app.quantun.summary.service.impl;
 
 import app.quantun.summary.model.contract.dto.BookSummary;
-import app.quantun.summary.model.contract.dto.TableIndexContent;
 import app.quantun.summary.model.entity.Book;
 import app.quantun.summary.service.SummaryServices;
 import lombok.RequiredArgsConstructor;
@@ -31,16 +30,12 @@ import java.util.Map;
 @Slf4j
 public class SummaryServicesImpl implements SummaryServices {
 
+    private final ResourceLoader resourceLoader;
     @Autowired
     @Qualifier("geminiChatClient")
-    private  ChatClient geminiChatClient;
-
-
+    private ChatClient geminiChatClient;
     @Value("classpath:templates/system/book.summary.structure.st")
     private Resource systemSummaryBookTemplate;
-
-    private final ResourceLoader resourceLoader;
-
 
     @Override
     public BookSummary summarizeBook(Book book) {
@@ -48,39 +43,33 @@ public class SummaryServicesImpl implements SummaryServices {
         try {
 
 
-
-
-
             log.info("Starting book summarization process");
             log.debug("Loading book from path: {}", book.getPath());
             PromptTemplate promptTemplate = new PromptTemplate(this.systemSummaryBookTemplate);
-        BeanOutputConverter<BookSummary> converter = new BeanOutputConverter<>(BookSummary.class);
-        Prompt prompt = promptTemplate.create(Map.of("format", converter.getFormat()));
-        String filePath = book.getPath();
-        Resource resource = resourceLoader.getResource("file:" + filePath);
+            BeanOutputConverter<BookSummary> format = new BeanOutputConverter<>(BookSummary.class);
+            Prompt prompt = promptTemplate.create(Map.of("format", format.getFormat()));
+            String filePath = book.getPath();
+            Resource resource = resourceLoader.getResource("file:" + filePath);
 
             log.debug("Resource loaded successfully, exists: {}", resource.exists());
 
             String aiResponse = geminiChatClient.prompt(prompt).advisors(new SimpleLoggerAdvisor()).user(promptUserSpec ->
-                promptUserSpec.text("Extract the Content for this book")
-                        .media(new Media(new MimeType("application", "pdf"), resource))
-        ).call().content();
+                    promptUserSpec.text("Extract the Content for this book")
+                            .media(new Media(new MimeType("application", "pdf"), resource))
+            ).call().content();
             log.debug("Received AI response of length: {}", aiResponse.length());
 
-            BookSummary result = converter.convert(aiResponse);
-        log.info("Table of content: {}", result);
-        return result;
+            BookSummary result = format.convert(aiResponse);
+            log.info("Table of content: {}", "OK");
+            return result;
 
         } catch (NonTransientAiException e) {
             log.error("NonTransientAiException Failed to summarize book {}", e.getMessage());
             return null;
-        }
-        catch (TransientAiException e) {
+        } catch (TransientAiException e) {
             log.error("TransientAiException Failed to summarize book {}", e.getMessage());
             return null;
-        }
-
-        finally {
+        } finally {
             MDC.remove("bookId");
         }
 

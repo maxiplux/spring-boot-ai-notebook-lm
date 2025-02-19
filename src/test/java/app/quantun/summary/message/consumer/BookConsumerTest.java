@@ -1,7 +1,6 @@
 package app.quantun.summary.message.consumer;
 
 import app.quantun.summary.repository.BookRepository;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
