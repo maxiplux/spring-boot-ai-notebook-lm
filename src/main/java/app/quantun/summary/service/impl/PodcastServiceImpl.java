@@ -57,10 +57,9 @@ public class PodcastServiceImpl implements PodcastService {
 
             BeanOutputConverter<PodCast> format = new BeanOutputConverter<>(PodCast.class);
 
-            Prompt systemPrompt = systemPromptTemplate.create(Map.of("summary", bookSummaryJson, "format", format.getFormat()));
+            Prompt systemPrompt = systemPromptTemplate.create();
 
             Prompt userPrompt = userPromptTemplate.create(Map.of("summary", bookSummaryJson, "format", format.getFormat()));
-
 
 
             String aiResponse = chatClient.prompt(systemPrompt).advisors(new SimpleLoggerAdvisor()).user(userPrompt.getContents()).call().content();
@@ -75,8 +74,6 @@ public class PodcastServiceImpl implements PodcastService {
             log.error("Error while converting book summary to JSON.{}", e.getMessage());
             throw new RuntimeException("Error while converting book summary to JSON.", e);
         }
-
-
 
 
     }

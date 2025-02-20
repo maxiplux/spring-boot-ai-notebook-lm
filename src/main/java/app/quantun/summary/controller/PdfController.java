@@ -8,8 +8,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +26,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class PdfController {
 
     private final PdfServices pdfServices;
+    @Autowired
+    @Qualifier("anthropicChatClient")
+    private ChatClient anthropicChatClient;
+    @Autowired
+    @Qualifier("openAiChatClient")
+    private ChatClient openAiChatClient;
+    @Autowired
+    @Qualifier("perplexityChatClient")
+    private ChatClient perplexityChatClient;
 
     /**
      * Handles the upload of a PDF file.
@@ -57,6 +71,21 @@ public class PdfController {
     @PostMapping("/get-table-of-content")
     public TableIndexContent getTableOfContent(String message) {
         return this.pdfServices.getBookTableOfContentPages(message);
+    }
+
+    @GetMapping("/anthropic")
+    public String getAnthropicChatClient() {
+        return anthropicChatClient.prompt().user("GIVE A NUMBER BETWEEN ONE TO FIVE").call().content();
+    }
+
+    @GetMapping("/openai")
+    public String getOpenAiChatClient() {
+        return openAiChatClient.prompt().user("GIVE A NUMBER BETWEEN ONE TO FIVE").call().content();
+    }
+
+    @GetMapping("/perplexity")
+    public String getPerplexityChatClient() {
+        return perplexityChatClient.prompt().advisors(new SimpleLoggerAdvisor()).user("GIVE A NUMBER BETWEEN ONE TO FIVE").call().content();
     }
 
 

@@ -1,10 +1,14 @@
 package app.quantun.summary.config.ai;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-// Configuration Properties Class
-//@ConfigurationProperties(prefix = "spring.ai.perplexity")
-//@Data
+@Configuration
+@ConfigurationProperties(prefix = "spring.ai.perplexity")
+
+
+@Data
 public class PerplexityProperties {
     private String apiKey;
     private String baseUrl;

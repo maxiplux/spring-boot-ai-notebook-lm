@@ -1,6 +1,8 @@
 package app.quantun.summary.message.consumer;
 
 import app.quantun.summary.repository.BookRepository;
+import app.quantun.summary.service.PodcastService;
+import app.quantun.summary.service.SummaryServices;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -26,23 +28,18 @@ class BookConsumerTest {
 
     @BeforeEach
     public void setUp(EmbeddedKafkaBroker embeddedKafkaBroker) {
-/*
-        // Create a mock SummaryBookRepository to satisfy the dependency of SummaryBookConsumerImpl.
-        SummaryBookRepository repository = mock(SummaryBookRepository.class);
-        summaryBookConsumer = Mockito.spy(new SummaryBookConsumerImpl(repository));
-
         Map<String, Object> producerProps = KafkaTestUtils.producerProps(embeddedKafkaBroker);
-        ProducerFactory<String, Map<String, String>> producerFactory = new DefaultKafkaProducerFactory<>(producerProps);
-        kafkaTemplate = new KafkaTemplate<>(producerFactory);
-*/
 
-// Create a mock SummaryBookRepository to satisfy the dependency of SummaryBookConsumerImpl.
         BookRepository repository = Mockito.mock(BookRepository.class);
-        summaryBookConsumer = Mockito.spy(new SummaryBookConsumerImpl(repository));
+        PodcastService podcastService = Mockito.mock(PodcastService.class);
 
-        Map<String, Object> producerProps = KafkaTestUtils.producerProps(embeddedKafkaBroker);
+        SummaryServices summaryServices = Mockito.mock(SummaryServices.class);
+
+        summaryBookConsumer = Mockito.spy(new SummaryBookConsumerImpl(repository, summaryServices, podcastService));
+
         ProducerFactory<String, Map<String, String>> producerFactory = new DefaultKafkaProducerFactory<>(producerProps);
         KafkaTemplate<String, Map<String, String>> kafkaTemplate = new KafkaTemplate<>(producerFactory);
+
     }
 
     @Test
