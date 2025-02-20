@@ -1,7 +1,9 @@
 package app.quantun.summary.controller;
 
 import app.quantun.summary.model.contract.dto.TableIndexContent;
+import app.quantun.summary.model.contract.request.Base64FileUploadRequest;
 import app.quantun.summary.service.PdfServices;
+import app.quantun.summary.util.Util;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,11 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -67,6 +68,54 @@ public class PdfController {
         String fileName = this.pdfServices.storePdfFile(file);
         return ResponseEntity.ok("File uploaded successfully: " + fileName);
     }
+
+
+
+
+
+
+
+
+
+
+
+    @PostMapping(value = "/upload-base64", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(
+            summary = "Upload PDF file",
+            description = "Upload a PDF file to the server",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "File uploaded successfully",
+                            content = @Content(schema = @Schema(implementation = String.class))),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid file format or empty file",
+                            content = @Content),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content)
+            })
+    public ResponseEntity<String> handleFileUpload(@RequestBody Base64FileUploadRequest file) {
+        if (file == null) {
+            return ResponseEntity.badRequest().body("File cannot be null");
+        }
+        String fileName = null;
+        try {
+            fileName = this.pdfServices.storePdfFile(Util.base64ToMultipart(file));
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body("File cannot be null");
+        }
+        return ResponseEntity.ok("File uploaded successfully: " + fileName);
+
+
+    }
+
+
+
+    
+    
 
     @PostMapping("/get-table-of-content")
     public TableIndexContent getTableOfContent(String message) {

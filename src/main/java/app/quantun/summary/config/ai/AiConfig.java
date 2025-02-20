@@ -50,9 +50,11 @@ public class AiConfig {
     @Bean
     public ChatClient perplexityChatClient(@Qualifier("perplexityProperties")
                                            PerplexityProperties perplexityProperties) {
-        OpenAiApi openAiApi = new OpenAiApi(perplexityProperties.getBaseUrl(), perplexityProperties.getApiKey());
+        OpenAiApi openAiApi = new OpenAiApi(perplexityProperties.getBaseUrl()+perplexityProperties.getChat().getCompletionsPath(), perplexityProperties.getApiKey());
+
         OpenAiChatOptions chatOptions = OpenAiChatOptions.builder()
                 .model(perplexityProperties.getChat().getModel())
+
                 .temperature(perplexityProperties.getChat().getTemperature())
                 .build();
         OpenAiChatModel chatModel = new OpenAiChatModel(openAiApi, chatOptions);
