@@ -25,7 +25,7 @@ import java.util.Map;
 public class PodcastServiceImpl implements PodcastService {
 
     @Autowired
-    @Qualifier("anthropicChatClient")
+    @Qualifier("geminiChatClient")
     private ChatClient chatClient;
 
 
@@ -57,12 +57,9 @@ public class PodcastServiceImpl implements PodcastService {
 
             BeanOutputConverter<PodCast> format = new BeanOutputConverter<>(PodCast.class);
 
-            Prompt systemPrompt = systemPromptTemplate.create(
-                    Map.of("summary", bookSummaryJson, "format", format.getFormat())
+            Prompt systemPrompt = systemPromptTemplate.create(Map.of("summary", bookSummaryJson, "format", format.getFormat()));
 
-            );
-
-            Prompt userPrompt = userPromptTemplate.create();
+            Prompt userPrompt = userPromptTemplate.create(Map.of("summary", bookSummaryJson, "format", format.getFormat()));
 
 
 

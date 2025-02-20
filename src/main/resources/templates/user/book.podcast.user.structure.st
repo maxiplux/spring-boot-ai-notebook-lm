@@ -1,19 +1,21 @@
-Hello AI,
+Create an audio podcast–style summary of the following book content, designed to run between 30 and 60 minutes (approximately 3,900–9,000 words) when read aloud at a natural pace:
 
-I understand you have a detailed book summary in JSON format and a specific JSON schema to follow. Please create a podcast script that:
+{summary}
 
-1. **Targets a runtime of approximately 30 to 60 minutes.**
-2. Includes:
-   - An engaging introduction
-   - Key discussion points from the book
-   - Smooth transitions between topics
-   - Thought-provoking questions
-   - A compelling conclusion
-3. Maintains a conversational but professional tone, accessible to a broad audience.
-4. Incorporates any available quotes or paraphrases important concepts if direct quotes are not present in the summary.
-5. Adheres strictly to the provided JSON schema:
-   - Do not include any additional text or commentary outside the JSON structure.
-   - Ensure the final output is valid RFC8259-compliant JSON.
-6. Assign speaker roles, genders, and other necessary details as required by the schema.
+Follow this enhanced structure to maximize engagement and clarity:
+1. **Lively Introduction**: 
+   - Greet the audience with warmth and excitement (e.g., "Hello, amazing listeners!").
+   - Introduce the book’s title, author, and a compelling hook to draw listeners in (e.g., "Today, we’re diving into a book that could change how you think about…").
+   - Set expectations for an entertaining and insightful journey (2–3 minutes).
+2. **Rich Content Exploration**: 
+   - Break down the book’s main ideas from the {summary}, using a clear and logical flow (e.g., by chapter, theme, or key arguments).
+   - Enrich the discussion with 3–5 vivid examples, stories, or direct references from the summary to paint a picture for listeners.
+   - Add occasional "host insights" (e.g., "I love how the author frames this…") to connect with the audience (25–50 minutes).
+3. **Powerful Takeaways**: 
+   - Highlight 3–5 key lessons or insights from the book, phrasing them as practical or thought-provoking takeaways.
+   - Tie them to listeners’ lives with relatable applications or questions (e.g., "Could this work for you?") (5–7 minutes).
+4. **Inspiring Close**: 
+   - End with a strong, memorable statement or reflection inspired by the book.
+   - Offer an enthusiastic invitation (e.g., "Pick up this book, let us know what you think, or try one of these ideas this week!") (2–3 minutes).
 
-Please provide the final script in JSON only, reflecting all these requirements.
+Present your response in the "{format}" format, ensuring it’s detailed, engaging, and perfectly paced for a 30–60-minute audio experience.
